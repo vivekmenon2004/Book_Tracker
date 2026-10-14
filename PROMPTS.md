@@ -70,3 +70,34 @@ This document records the prompt sequence used to design, build, test, and style
 > - Sticky top header with the app name and a subtle blur or translucent background.
 > - Phone layout: single column, full-width inputs, tap targets at least 44px high, no horizontal scrolling at 360px width.
 > - Do not use Apple logos, images, font files or copied code.
+
+---
+
+### Prompt 7: Attractive & Polished Redesign
+> Redesign the look of my Book Tracker so it is more attractive and polished. It is a plain HTML, CSS and vanilla JavaScript app (index.html, style.css, app.js). 
+>
+> IMPORTANT: this is a visual change only. Do not change how adding, validation, search, status change or localStorage saving works. Do not rename functions or change the book data shape. If a small JavaScript change is needed for a visual effect, keep it minimal and tell me exactly what you changed and why.
+>
+> Before coding, list what you will change in each file. Then make the changes.
+>
+> Design (my own design, inspired by a clean Apple-style store look; no Apple logos, images,):
+> - Content max-width about 1000px, centred.
+> - Screens 900px and wider: two columns. Left: the "Add a book" card, sticky while scrolling. Right: the Books heading, search box and list.
+> - Below 900px: a single column.
+> - Header: Sticky, translucent white with backdrop-filter blur and a thin bottom border. App name "Book Tracker" with a small book icon drawn as inline SVG, and a short muted subtitle such as "Keep track of what you read."
+> - Form card: White card, 20px radius, layered soft shadow. All inputs, the select and the search box share the same shape: 48px height, 12px radius, light border, blue focus ring. Fix the large uneven gaps between fields: keep consistent spacing, and let the error message take space only when it is visible. Error messages in a soft red with small text. Add button: pill-shaped, solid blue accent, subtle hover and press effect.
+> - Book list: Each book is a card with a cover-style block on the left showing the first letter of the title on a soft gradient (pick the gradient from a small set based on the title; no images). Title bold, author muted, long text wraps (overflow-wrap: anywhere). Status badge as a small pill: To read = amber, Reading = blue, Finished = green. The status control is restyled as a compact pill-shaped select. Hover: card lifts 2px with a stronger shadow. Transitions 150 to 200ms. A newly added book fades and slides in. Wrap animations in prefers-reduced-motion so they are disabled for users who request it.
+> - Empty states: "No books yet. Add your first book above." and "No books found" centred, muted, with a simple inline SVG icon.
+> - Colour and theme: Define colours as CSS variables. One blue accent colour. Page background: very light grey to faint blue gradient. Support dark mode with @media (prefers-color-scheme: dark).
+> - Phone (600px and below): Single column, full-width inputs and a full-width Add button. Tap targets at least 44px high. No horizontal scrolling at 360px width.
+> - Accessibility: Keep all labels. Visible focus states. Good text contrast.
+>
+> use the .agent skill for it
+>
+> Only change what is needed. Do not add new features such as delete or counts.
+
+---
+
+### Prompt 8: White Radiant Gradient & UI Refinement
+> use white gradiant background and use .agent skill to impove the ui and design
+

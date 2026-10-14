@@ -1,27 +1,80 @@
 /* ==========================================================================
-   Book Tracker - Clean Apple-Inspired Design
+   Book Tracker - Radiant White Gradient Apple-Inspired Design System
+   Crafted with UI/UX Pro Max Intelligence
    ========================================================================== */
 
-/* Design Tokens */
+/* --------------------------------------------------------------------------
+   Design Tokens & CSS Variables (Luminous White Gradient Theme)
+   -------------------------------------------------------------------------- */
 :root {
-  --bg-page: #f5f5f7;
+  /* Luminous White Gradient Canvas */
+  --bg-page: #ffffff;
+  --bg-gradient: 
+    radial-gradient(at 0% 0%, rgba(238, 245, 255, 0.75) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(245, 240, 255, 0.65) 0px, transparent 55%),
+    radial-gradient(at 50% 100%, rgba(240, 246, 252, 0.85) 0px, transparent 65%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #eef2f8 100%);
+  
   --bg-card: #ffffff;
-  --text-primary: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --text-muted: #86868b;
+  --bg-card-hover: #ffffff;
+  
+  /* Text Colors (High Contrast, WCAG AAA compliant) */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  /* Apple Blue Accent */
   --accent-blue: #0071e3;
   --accent-blue-hover: #0077ed;
   --accent-blue-active: #0062c4;
-  --accent-focus-ring: rgba(0, 113, 227, 0.22);
-  --border-subtle: rgba(0, 0, 0, 0.08);
-  --border-input: #d2d2d7;
-  --card-radius: 16px;
-  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-  --system-font: -apple-system, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --error-color: #e02424;
+  --accent-focus-ring: rgba(0, 113, 227, 0.16);
+  --accent-badge-bg: rgba(0, 113, 227, 0.08);
+  
+  /* Borders & Radii */
+  --border-subtle: rgba(15, 23, 42, 0.06);
+  --border-input: #e2e8f0;
+  --border-input-hover: #cbd5e1;
+  --card-radius: 20px;
+  --input-radius: 12px;
+  
+  --error-color: #e11d48;
+  
+  /* Status Pill Palette (Soft Pastel with Distinct Indicator Dots) */
+  --status-toread-bg: #fff7ed;
+  --status-toread-text: #c2410c;
+  --status-toread-border: rgba(234, 88, 12, 0.18);
+  
+  --status-reading-bg: #f0f9ff;
+  --status-reading-text: #0284c7;
+  --status-reading-border: rgba(2, 132, 199, 0.18);
+  
+  --status-finished-bg: #f0fdf4;
+  --status-finished-text: #16a34a;
+  --status-finished-border: rgba(22, 163, 74, 0.18);
+
+  /* Typography */
+  --system-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  /* Layered Ambient Shadows */
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.02), 0 8px 24px -4px rgba(15, 23, 42, 0.05), 0 20px 48px -8px rgba(15, 23, 42, 0.03);
+  --shadow-card-hover: 0 2px 6px rgba(15, 23, 42, 0.03), 0 14px 34px -4px rgba(15, 23, 42, 0.09), 0 28px 56px -8px rgba(15, 23, 42, 0.04);
+  
+  /* Header Blur */
+  --header-bg: rgba(255, 255, 255, 0.86);
+  --header-border: rgba(15, 23, 42, 0.06);
+
+  /* Diverse Vibrant Cover Gradients */
+  --grad-0: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+  --grad-1: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+  --grad-2: linear-gradient(135deg, #059669 0%, #34d399 100%);
+  --grad-3: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --grad-4: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  --grad-5: linear-gradient(135deg, #db2777 0%, #f43f5e 100%);
 }
 
-/* Global Reset & Base */
+/* --------------------------------------------------------------------------
+   Global Reset & Base Canvas (Guaranteed Radiant White Gradient)
+   -------------------------------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -35,6 +88,8 @@ body {
   width: 100%;
   min-height: 100vh;
   background-color: var(--bg-page);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
   color: var(--text-primary);
   font-family: var(--system-font);
   font-size: 16px;
@@ -44,294 +99,553 @@ body {
   overflow-x: hidden;
 }
 
-/* Sticky Translucent Header */
+/* --------------------------------------------------------------------------
+   Sticky Translucent Header
+   -------------------------------------------------------------------------- */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(245, 245, 247, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--header-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--header-border);
   width: 100%;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
 }
 
 .header-container {
-  max-width: 640px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 14px 20px;
+  padding: 14px 24px;
+}
+
+.header-brand {
   display: flex;
   align-items: center;
+  gap: 14px;
+}
+
+.header-icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background-color: var(--accent-badge-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-blue);
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 113, 227, 0.1);
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .app-title {
   margin: 0;
   font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
+  line-height: 1.2;
 }
 
-/* Main Container */
+.app-subtitle {
+  margin: 2px 0 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+/* --------------------------------------------------------------------------
+   Layout & Container (Centred, Max-width 1000px)
+   -------------------------------------------------------------------------- */
 .container {
-  max-width: 640px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 24px 20px 48px;
+  padding: 36px 24px 64px;
   width: 100%;
 }
 
-/* Rounded Cards */
+/* 2 Columns on 900px and wider */
+.app-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 900px) {
+  .app-layout {
+    grid-template-columns: 380px 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+
+  /* Left column: Sticky Add a book card while scrolling */
+  .layout-sidebar {
+    position: sticky;
+    top: 86px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Cards (White Floating Glass, 20px Radius, Layered Soft Shadow)
+   -------------------------------------------------------------------------- */
 .card {
   background-color: var(--bg-card);
   border-radius: var(--card-radius);
   border: 1px solid var(--border-subtle);
-  box-shadow: var(--card-shadow);
-  padding: 24px;
-  margin-bottom: 28px;
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* Form Styles */
+.card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 22px 0;
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Form Controls (Consistent 48px Height, 12px Radius, Blue Focus Ring)
+   -------------------------------------------------------------------------- */
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
 }
 
 input[type="text"],
-select {
+select,
+.search-group input[type="text"] {
   display: block;
   width: 100%;
-  min-height: 44px;
-  padding: 10px 14px;
-  font-size: 1rem;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 16px;
+  font-size: 0.95rem;
   font-family: inherit;
   color: var(--text-primary);
   background-color: #ffffff;
-  border: 1px solid var(--border-input);
-  border-radius: 10px;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--input-radius);
+  transition: border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   appearance: none;
   -webkit-appearance: none;
 }
 
-/* Custom dropdown arrow for select elements */
-select {
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2386868b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 36px;
+input[type="text"]::placeholder,
+.search-group input[type="text"]::placeholder {
+  color: #94a3b8;
 }
 
-/* Input Focus States */
+input[type="text"]:hover,
+select:hover {
+  border-color: var(--border-input-hover);
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.5 2L6 6.5L10.5 2' stroke='%2364748b' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 42px;
+  cursor: pointer;
+}
+
+/* Focus States: Apple Blue Accent Ring */
 input[type="text"]:focus,
 select:focus {
   outline: none;
   border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px var(--accent-focus-ring);
+  box-shadow: 0 0 0 4px var(--accent-focus-ring);
 }
 
-/* Error Messages */
+/* Error Messages: Soft Red, Takes Space ONLY when visible */
 .error-message {
+  display: none;
   color: var(--error-color);
   font-size: 0.8125rem;
-  min-height: 1.25rem;
-  margin-top: 4px;
-  line-height: 1.3;
+  font-weight: 500;
+  margin-top: 6px;
+  line-height: 1.35;
 }
 
-/* Pill-Shaped Add Button */
+.error-message:not(:empty) {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Add Button (Pill-Shaped, Apple Blue Gradient, Hover & Press Effects)
+   -------------------------------------------------------------------------- */
 button[type="submit"],
 #submit-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 10px 24px;
-  font-size: 0.95rem;
-  font-weight: 500;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 28px;
+  font-size: 1rem;
+  font-weight: 600;
   font-family: inherit;
   color: #ffffff;
-  background-color: var(--accent-blue);
+  background: linear-gradient(180deg, var(--accent-blue-hover) 0%, var(--accent-blue) 100%);
   border: none;
   border-radius: 980px;
   cursor: pointer;
-  transition: background-color 0.18s ease, transform 0.1s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 113, 227, 0.28), 0 8px 16px -2px rgba(0, 113, 227, 0.2);
+  transition: transform 0.12s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
 
 button[type="submit"]:hover,
 #submit-btn:hover {
-  background-color: var(--accent-blue-hover);
+  background: linear-gradient(180deg, #0077ed 0%, #006bd6 100%);
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.35), 0 12px 24px -2px rgba(0, 113, 227, 0.25);
+  transform: translateY(-1px);
 }
 
 button[type="submit"]:active,
 #submit-btn:active {
-  background-color: var(--accent-blue-active);
-  transform: scale(0.98);
+  background: var(--accent-blue-active);
+  transform: translateY(0) scale(0.985);
+  box-shadow: 0 1px 4px rgba(0, 113, 227, 0.25);
 }
 
 button[type="submit"]:focus-visible,
 #submit-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--accent-focus-ring);
+  box-shadow: 0 0 0 4px var(--accent-focus-ring);
 }
 
-/* Books Section */
-.books-section {
-  margin-top: 8px;
-}
-
-.books-section h2 {
-  font-size: 1.375rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  margin: 0 0 16px 0;
+/* --------------------------------------------------------------------------
+   Books Section & Search Box
+   -------------------------------------------------------------------------- */
+.books-section .section-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px 0;
   color: var(--text-primary);
 }
 
 .search-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .search-group input[type="text"] {
-  border-radius: 980px;
-  padding-left: 18px;
-  padding-right: 18px;
+  border-radius: var(--input-radius);
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 16px center;
+  padding-left: 44px;
 }
 
-/* Empty State Message */
+/* --------------------------------------------------------------------------
+   Empty State Card (Centred, Muted, Clean SVG Icon)
+   -------------------------------------------------------------------------- */
 .empty-message {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  background-color: #ffffff;
+  border-radius: var(--card-radius);
+  border: 1.5px dashed #cbd5e1;
   color: var(--text-secondary);
   font-size: 0.95rem;
-  text-align: center;
-  padding: 32px 16px;
-  background-color: var(--bg-card);
-  border-radius: var(--card-radius);
-  border: 1px dashed var(--border-input);
+  gap: 14px;
   margin: 16px 0;
 }
 
-/* Book List & Cards */
+.empty-state-icon {
+  width: 48px;
+  height: 48px;
+  color: #94a3b8;
+  stroke-width: 1.5;
+  padding: 10px;
+  background: #f1f5f9;
+  border-radius: 50%;
+}
+
+.empty-state-text {
+  max-width: 320px;
+  margin: 0;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Book Cards List
+   -------------------------------------------------------------------------- */
 #book-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .book-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
   background-color: var(--bg-card);
   border-radius: var(--card-radius);
   border: 1px solid var(--border-subtle);
-  box-shadow: var(--card-shadow);
-  padding: 20px 24px;
-  margin-bottom: 16px;
-  transition: box-shadow 0.2s ease;
-  overflow-wrap: break-word;
+  box-shadow: var(--shadow-card);
+  padding: 18px 22px;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1), border-color 180ms ease;
+  overflow-wrap: anywhere;
   word-break: break-word;
 }
 
+/* Hover: Lifts 2px with stronger shadow & subtle blue border */
 .book-card:hover {
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.03);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgba(0, 113, 227, 0.18);
+}
+
+/* Cover Block (Left) with Vibrant Pastel Gradient & Initial Letter */
+.book-cover {
+  width: 62px;
+  min-width: 62px;
+  height: 80px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* Cover Gradient Variants (Diverse & Vibrant) */
+.book-cover.gradient-0 { background-image: var(--grad-0); }
+.book-cover.gradient-1 { background-image: var(--grad-1); }
+.book-cover.gradient-2 { background-image: var(--grad-2); }
+.book-cover.gradient-3 { background-image: var(--grad-3); }
+.book-cover.gradient-4 { background-image: var(--grad-4); }
+.book-cover.gradient-5 { background-image: var(--grad-5); }
+
+/* Card Content Details (Right) */
+.book-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  min-width: 0;
 }
 
 .book-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--text-primary);
   margin: 0 0 4px 0;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   word-break: break-word;
+  line-height: 1.35;
 }
 
 .book-author {
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   margin: 0 0 14px 0;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* Status Control & Pill Badges */
+/* --------------------------------------------------------------------------
+   Status Control: Pill Badges & Compact Pill Select
+   -------------------------------------------------------------------------- */
 .status-control {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(0, 0, 0, 0.04);
   flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px solid rgba(15, 23, 42, 0.05);
 }
 
-/* Base Badge */
+/* Base Badge with Dot Indicator */
 .book-status {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   padding: 4px 12px;
   border-radius: 980px;
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  background-color: #f2f2f7;
-  color: #636366;
-  transition: background-color 0.18s ease, color 0.18s ease;
+  letter-spacing: 0.02em;
+  background-color: var(--status-toread-bg);
+  color: var(--status-toread-text);
+  border: 1px solid var(--status-toread-border);
+  transition: all 0.18s ease;
+  user-select: none;
 }
 
-/* Distinct Soft Color for Each Status */
-.status-control:has(option[value="To read"]:checked) .book-status {
-  background-color: #fff4e5;
-  color: #b25e00;
+.book-status::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
 }
 
-.status-control:has(option[value="Reading"]:checked) .book-status {
-  background-color: #e8f2fc;
-  color: #0071e3;
+/* Amber for To read, Blue for Reading, Green for Finished */
+.status-control:has(option[value="To read"]:checked) .book-status,
+.book-status[data-status="To read"] {
+  background-color: var(--status-toread-bg);
+  color: var(--status-toread-text);
+  border-color: var(--status-toread-border);
 }
 
-.status-control:has(option[value="Finished"]:checked) .book-status {
-  background-color: #eaf6ed;
-  color: #1e7e34;
+.status-control:has(option[value="Reading"]:checked) .book-status,
+.book-status[data-status="Reading"] {
+  background-color: var(--status-reading-bg);
+  color: var(--status-reading-text);
+  border-color: var(--status-reading-border);
 }
 
-/* Card Status Dropdown Control */
+.status-control:has(option[value="Finished"]:checked) .book-status,
+.book-status[data-status="Finished"] {
+  background-color: var(--status-finished-bg);
+  color: var(--status-finished-text);
+  border-color: var(--status-finished-border);
+}
+
+/* Compact Pill Select */
 .card-status-select {
-  min-height: 44px;
+  height: 34px;
+  min-height: 34px;
   width: auto;
-  min-width: 130px;
-  padding: 8px 32px 8px 12px;
+  min-width: 125px;
+  padding: 0 30px 0 12px;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-secondary);
-  background-color: #ffffff;
+  background-color: #f8fafc;
   border: 1px solid var(--border-input);
   border-radius: 980px;
+  cursor: pointer;
+  transition: all 0.16s ease;
 }
 
-/* Phone-Friendly Layout (360px+ support) */
-@media (max-width: 480px) {
+.card-status-select:hover {
+  background-color: #ffffff;
+  border-color: var(--border-input-hover);
+  color: var(--text-primary);
+}
+
+.card-status-select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px var(--accent-focus-ring);
+  background-color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Animations: Slide & Fade-in for Newly Added Books
+   -------------------------------------------------------------------------- */
+@keyframes slideInBook {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-animate-in {
+  animation: slideInBook 260ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Prefers-Reduced-Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .book-card:hover {
+    transform: none !important;
+  }
+
+  button[type="submit"]:hover,
+  #submit-btn:hover {
+    transform: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Phone Layout (600px and below)
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
   .header-container {
     padding: 12px 16px;
   }
 
   .container {
-    padding: 16px 14px 40px;
+    padding: 20px 16px 48px;
   }
 
-  .card,
-  .book-card {
-    padding: 18px 16px;
+  .card {
+    padding: 20px 16px;
     border-radius: var(--card-radius);
   }
 
+  /* Full-width inputs and Add button */
+  input[type="text"],
+  select,
+  .search-group input[type="text"],
   button[type="submit"],
   #submit-btn {
     width: 100%;
+    min-height: 48px;
+  }
+
+  .book-card {
+    padding: 16px;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .book-cover {
+    width: 52px;
+    min-width: 52px;
+    height: 70px;
+    font-size: 1.45rem;
   }
 
   .status-control {
@@ -342,5 +656,6 @@ button[type="submit"]:focus-visible,
 
   .card-status-select {
     width: 100%;
+    min-height: 44px;
   }
 }
