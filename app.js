@@ -41,6 +41,18 @@ const authorError = document.getElementById('author-error');
 const searchInput = document.getElementById('search-input');
 const emptyMessage = document.getElementById('empty-message');
 const bookList = document.getElementById('book-list');
+const booksSummary = document.getElementById('books-summary');
+
+// Update summary counts line: "X finished, Y reading, Z to read"
+function updateSummary() {
+  if (!booksSummary) return;
+
+  const finishedCount = books.filter((b) => b.status === 'Finished').length;
+  const readingCount = books.filter((b) => b.status === 'Reading').length;
+  const toReadCount = books.filter((b) => b.status === 'To read').length;
+
+  booksSummary.textContent = `${finishedCount} finished, ${readingCount} reading, ${toReadCount} to read`;
+}
 
 // Clear error messages on input
 titleInput.addEventListener('input', () => {
@@ -55,11 +67,65 @@ authorInput.addEventListener('input', () => {
   }
 });
 
+// Deterministic gradient selection based on title DJB2 hash (0 to 5)
+function getTitleGradientClass(title) {
+  let hash = 5381;
+  const clean = title.trim();
+  for (let i = 0; i < clean.length; i++) {
+    hash = (hash * 33) ^ clean.charCodeAt(i);
+  }
+  return 'gradient-' + (Math.abs(hash) % 6);
+}
+
+// Helper to render empty state with SVG icon and textContent
+function renderEmptyState(message) {
+  while (emptyMessage.firstChild) {
+    emptyMessage.removeChild(emptyMessage.firstChild);
+  }
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('class', 'empty-state-icon');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '1.5');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+  svg.setAttribute('aria-hidden', 'true');
+
+  const path1 = document.createElementNS(svgNS, 'path');
+  path1.setAttribute('d', 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20');
+  const path2 = document.createElementNS(svgNS, 'path');
+  path2.setAttribute('d', 'M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z');
+  svg.appendChild(path1);
+  svg.appendChild(path2);
+
+  const textEl = document.createElement('p');
+  textEl.className = 'empty-state-text';
+  textEl.textContent = message;
+
+  emptyMessage.appendChild(svg);
+  emptyMessage.appendChild(textEl);
+  emptyMessage.style.display = 'flex';
+}
+
 // Create and render a single book card element using textContent
 function createBookElement(book) {
   const li = document.createElement('li');
   li.className = 'book-card';
   li.setAttribute('data-id', book.id);
+
+  // Cover-style block with initial letter on a soft gradient
+  const coverEl = document.createElement('div');
+  const gradientClass = getTitleGradientClass(book.title);
+  coverEl.className = 'book-cover ' + gradientClass;
+  const firstLetter = book.title.trim().charAt(0).toUpperCase() || 'B';
+  coverEl.textContent = firstLetter;
+
+  // Details container
+  const detailsEl = document.createElement('div');
+  detailsEl.className = 'book-details';
 
   const titleEl = document.createElement('h3');
   titleEl.className = 'book-title';
@@ -75,6 +141,7 @@ function createBookElement(book) {
   const statusEl = document.createElement('span');
   statusEl.className = 'book-status';
   statusEl.textContent = book.status;
+  statusEl.setAttribute('data-status', book.status);
 
   const statusSelect = document.createElement('select');
   statusSelect.className = 'card-status-select';
@@ -97,22 +164,52 @@ function createBookElement(book) {
     if (targetBook) {
       targetBook.status = newStatus;
       statusEl.textContent = newStatus;
+      statusEl.setAttribute('data-status', newStatus);
       saveBooks();
+      updateSummary();
     }
   });
 
-  statusContainer.appendChild(statusEl);
-  statusContainer.appendChild(statusSelect);
+  // Delete button asking "Delete this book?" before removing
+  const deleteBtn = document.createElement('button');
+  deleteBtn.type = 'button';
+  deleteBtn.className = 'card-delete-btn';
+  deleteBtn.setAttribute('aria-label', 'Delete ' + book.title);
+  deleteBtn.textContent = 'Delete';
 
-  li.appendChild(titleEl);
-  li.appendChild(authorEl);
-  li.appendChild(statusContainer);
+  deleteBtn.addEventListener('click', () => {
+    const shouldDelete = window.confirm('Delete this book?');
+    if (shouldDelete) {
+      const index = books.findIndex((b) => b.id === book.id);
+      if (index !== -1) {
+        books.splice(index, 1);
+        saveBooks();
+        renderBooks();
+        updateSummary();
+      }
+    }
+  });
+
+  const controlsContainer = document.createElement('div');
+  controlsContainer.className = 'card-controls';
+  controlsContainer.appendChild(statusSelect);
+  controlsContainer.appendChild(deleteBtn);
+
+  statusContainer.appendChild(statusEl);
+  statusContainer.appendChild(controlsContainer);
+
+  detailsEl.appendChild(titleEl);
+  detailsEl.appendChild(authorEl);
+  detailsEl.appendChild(statusContainer);
+
+  li.appendChild(coverEl);
+  li.appendChild(detailsEl);
 
   return li;
 }
 
 // Render the book list based on current books and active search query
-function renderBooks() {
+function renderBooks(animatedBookId = null) {
   const query = searchInput.value.trim().toLowerCase();
 
   // Clear existing items in list without using innerHTML
@@ -122,8 +219,7 @@ function renderBooks() {
 
   // Case 1: Overall book collection is empty
   if (books.length === 0) {
-    emptyMessage.textContent = 'No books yet. Add your first book above.';
-    emptyMessage.style.display = 'block';
+    renderEmptyState('No books yet. Add your first book above.');
     return;
   }
 
@@ -137,17 +233,22 @@ function renderBooks() {
 
   // Case 2: Books exist, but none match the search filter
   if (filteredBooks.length === 0) {
-    emptyMessage.textContent = 'No books found';
-    emptyMessage.style.display = 'block';
+    renderEmptyState('No books found');
     return;
   }
 
   // Case 3: Display matching books
-  emptyMessage.textContent = '';
+  while (emptyMessage.firstChild) {
+    emptyMessage.removeChild(emptyMessage.firstChild);
+  }
   emptyMessage.style.display = 'none';
 
   filteredBooks.forEach((book) => {
-    bookList.appendChild(createBookElement(book));
+    const element = createBookElement(book);
+    if (book.id === animatedBookId) {
+      element.classList.add('card-animate-in');
+    }
+    bookList.appendChild(element);
   });
 }
 
@@ -158,6 +259,7 @@ searchInput.addEventListener('input', () => {
 
 // Initial render on page load
 renderBooks();
+updateSummary();
 
 // Handle form submission
 bookForm.addEventListener('submit', (event) => {
@@ -202,8 +304,9 @@ bookForm.addEventListener('submit', (event) => {
   // Persist updated list to localStorage
   saveBooks();
 
-  // Re-render list respecting active search filter
-  renderBooks();
+  // Re-render list respecting active search filter and animating new card
+  renderBooks(newBook.id);
+  updateSummary();
 
   // Clear form
   bookForm.reset();
