@@ -43,15 +43,99 @@ const emptyMessage = document.getElementById('empty-message');
 const bookList = document.getElementById('book-list');
 const booksSummary = document.getElementById('books-summary');
 
-// Update summary counts line: "X finished, Y reading, Z to read"
+// Modal Elements for in-app delete confirmation popup
+const deleteModal = document.getElementById('delete-modal');
+const modalDesc = document.getElementById('modal-desc');
+const modalCancelBtn = document.getElementById('modal-cancel-btn');
+const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+
+let bookIdPendingDeletion = null;
+
+function openDeleteModal(book) {
+  bookIdPendingDeletion = book.id;
+  modalDesc.textContent = `Are you sure you want to remove "${book.title}" from your collection?`;
+  deleteModal.hidden = false;
+  deleteModal.setAttribute('aria-hidden', 'false');
+  modalCancelBtn.focus();
+}
+
+function closeDeleteModal() {
+  bookIdPendingDeletion = null;
+  deleteModal.hidden = true;
+  deleteModal.setAttribute('aria-hidden', 'true');
+}
+
+modalCancelBtn.addEventListener('click', closeDeleteModal);
+
+// Close on backdrop click
+deleteModal.addEventListener('click', (e) => {
+  if (e.target === deleteModal) {
+    closeDeleteModal();
+  }
+});
+
+// Close on Escape key
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !deleteModal.hidden) {
+    closeDeleteModal();
+  }
+});
+
+// Confirm deletion in popup
+modalConfirmBtn.addEventListener('click', () => {
+  if (!bookIdPendingDeletion) return;
+  const index = books.findIndex((b) => b.id === bookIdPendingDeletion);
+  if (index !== -1) {
+    books.splice(index, 1);
+    saveBooks();
+    renderBooks();
+    updateSummary();
+  }
+  closeDeleteModal();
+});
+
+// Update summary counts as attractive button-like chips: "3 finished, 1 reading, 2 to read"
 function updateSummary() {
   if (!booksSummary) return;
+
+  while (booksSummary.firstChild) {
+    booksSummary.removeChild(booksSummary.firstChild);
+  }
 
   const finishedCount = books.filter((b) => b.status === 'Finished').length;
   const readingCount = books.filter((b) => b.status === 'Reading').length;
   const toReadCount = books.filter((b) => b.status === 'To read').length;
 
-  booksSummary.textContent = `${finishedCount} finished, ${readingCount} reading, ${toReadCount} to read`;
+  // Finished Chip
+  const finishedChip = document.createElement('span');
+  finishedChip.className = 'summary-chip chip-finished';
+  const finishedDot = document.createElement('span');
+  finishedDot.className = 'chip-dot';
+  const finishedText = document.createTextNode(` ${finishedCount} finished`);
+  finishedChip.appendChild(finishedDot);
+  finishedChip.appendChild(finishedText);
+
+  // Reading Chip
+  const readingChip = document.createElement('span');
+  readingChip.className = 'summary-chip chip-reading';
+  const readingDot = document.createElement('span');
+  readingDot.className = 'chip-dot';
+  const readingText = document.createTextNode(` ${readingCount} reading`);
+  readingChip.appendChild(readingDot);
+  readingChip.appendChild(readingText);
+
+  // To Read Chip
+  const toReadChip = document.createElement('span');
+  toReadChip.className = 'summary-chip chip-toread';
+  const toReadDot = document.createElement('span');
+  toReadDot.className = 'chip-dot';
+  const toReadText = document.createTextNode(` ${toReadCount} to read`);
+  toReadChip.appendChild(toReadDot);
+  toReadChip.appendChild(toReadText);
+
+  booksSummary.appendChild(finishedChip);
+  booksSummary.appendChild(readingChip);
+  booksSummary.appendChild(toReadChip);
 }
 
 // Clear error messages on input
@@ -170,7 +254,7 @@ function createBookElement(book) {
     }
   });
 
-  // Delete button asking "Delete this book?" before removing
+  // Delete button triggering in-app popup modal
   const deleteBtn = document.createElement('button');
   deleteBtn.type = 'button';
   deleteBtn.className = 'card-delete-btn';
@@ -178,16 +262,7 @@ function createBookElement(book) {
   deleteBtn.textContent = 'Delete';
 
   deleteBtn.addEventListener('click', () => {
-    const shouldDelete = window.confirm('Delete this book?');
-    if (shouldDelete) {
-      const index = books.findIndex((b) => b.id === book.id);
-      if (index !== -1) {
-        books.splice(index, 1);
-        saveBooks();
-        renderBooks();
-        updateSummary();
-      }
-    }
+    openDeleteModal(book);
   });
 
   const controlsContainer = document.createElement('div');

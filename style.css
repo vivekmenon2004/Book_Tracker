@@ -341,11 +341,57 @@ button[type="submit"]:focus-visible,
 }
 
 .books-summary {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
   margin: 0 0 20px 0;
-  letter-spacing: -0.01em;
+}
+
+.summary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 980px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  border: 1px solid transparent;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.summary-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+}
+
+.summary-chip.chip-finished {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border-color: rgba(22, 163, 74, 0.22);
+}
+
+.summary-chip.chip-reading {
+  background-color: #f0f9ff;
+  color: #0284c7;
+  border-color: rgba(2, 132, 199, 0.22);
+}
+
+.summary-chip.chip-toread {
+  background-color: #fff7ed;
+  color: #c2410c;
+  border-color: rgba(234, 88, 12, 0.22);
+}
+
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
 }
 
 .search-group {
@@ -582,36 +628,161 @@ button[type="submit"]:focus-visible,
   gap: 8px;
 }
 
-/* Card Delete Button */
+/* Card Delete Button (Red Color Pill) */
 .card-delete-btn {
   height: 34px;
   min-height: 34px;
-  padding: 0 12px;
+  padding: 0 14px;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
-  color: #64748b;
-  background-color: transparent;
-  border: 1px solid transparent;
+  color: #e11d48;
+  background-color: #fff1f2;
+  border: 1px solid rgba(225, 29, 72, 0.22);
   border-radius: 980px;
   cursor: pointer;
   transition: all 0.16s ease;
   user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .card-delete-btn:hover {
-  color: var(--error-color);
-  background-color: #fff1f2;
-  border-color: rgba(225, 29, 72, 0.18);
+  color: #ffffff;
+  background-color: #e11d48;
+  border-color: #e11d48;
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.32);
+  transform: translateY(-1px);
 }
 
 .card-delete-btn:active {
-  transform: scale(0.97);
+  transform: translateY(0) scale(0.97);
+  background-color: #be123c;
+  box-shadow: none;
 }
 
 .card-delete-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.2);
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Delete Confirmation Modal Popup
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeInModal 0.18s ease forwards;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 20px 48px -8px rgba(15, 23, 42, 0.22), 0 8px 16px -4px rgba(15, 23, 42, 0.1);
+  padding: 28px 24px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: scaleUpModal 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUpModal {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-icon-badge {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #fee2e2;
+  color: #e11d48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.modal-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-secondary {
+  flex: 1;
+  height: 44px;
+  border-radius: 980px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.btn-danger {
+  flex: 1;
+  height: 44px;
+  border-radius: 980px;
+  border: none;
+  background: #e11d48;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.3);
+  transition: all 0.15s ease;
+}
+
+.btn-danger:hover {
+  background: #be123c;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);
 }
 
 /* --------------------------------------------------------------------------

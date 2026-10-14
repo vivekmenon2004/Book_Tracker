@@ -104,3 +104,13 @@ This document records the prompt sequence used to design, build, test, and style
 > Add two small features without changing existing behaviour:
 > 1. A Delete button on each book. Ask "Delete this book?" before removing it, and update localStorage.
 > 2. A summary line above the list, such as "3 finished, 1 reading, 2 to read", which updates when books are added, changed or deleted.
+
+---
+
+### Prompt 10: Red Delete Button, In-App Modal & Button-Like Summary Chips
+> make the delete button red colour and change the localhost meaasage for delete to a pop up and make the A summary line above the list, such as "3 finished, 1 reading, 2 to read", which updates when books are added, changed or deleted. attractive like in a button like that and add this to the prompts.md Add two small features without changing existing behaviour:
+> 1. A Delete button on each book. Ask "Delete this book?" before removing it, and update localStorage.
+> 2. A summary line above the list, such as "3 finished, 1 reading, 2 to read", which updates when books are added, changed or deleted.
+>
+> and push to main branch
+
