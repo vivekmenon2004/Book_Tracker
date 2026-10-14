@@ -84,3 +84,10 @@ button {
   border-radius: 3px;
   font-size: 0.85rem;
 }
+
+.empty-message {
+  color: #666;
+  font-style: italic;
+  margin: 16px 0;
+}
+

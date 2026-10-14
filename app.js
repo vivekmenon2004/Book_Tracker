@@ -38,6 +38,8 @@ const authorInput = document.getElementById('book-author');
 const statusSelect = document.getElementById('book-status');
 const titleError = document.getElementById('title-error');
 const authorError = document.getElementById('author-error');
+const searchInput = document.getElementById('search-input');
+const emptyMessage = document.getElementById('empty-message');
 const bookList = document.getElementById('book-list');
 
 // Clear error messages on input
@@ -78,10 +80,53 @@ function createBookElement(book) {
   return li;
 }
 
-// Render initially loaded books (saved in newest-first order)
-books.forEach((book) => {
-  bookList.appendChild(createBookElement(book));
+// Render the book list based on current books and active search query
+function renderBooks() {
+  const query = searchInput.value.trim().toLowerCase();
+
+  // Clear existing items in list without using innerHTML
+  while (bookList.firstChild) {
+    bookList.removeChild(bookList.firstChild);
+  }
+
+  // Case 1: Overall book collection is empty
+  if (books.length === 0) {
+    emptyMessage.textContent = 'No books yet. Add your first book above.';
+    emptyMessage.style.display = 'block';
+    return;
+  }
+
+  // Filter books matching search query (title or author, case-insensitive)
+  const filteredBooks = query
+    ? books.filter((book) =>
+        book.title.toLowerCase().includes(query) ||
+        book.author.toLowerCase().includes(query)
+      )
+    : books;
+
+  // Case 2: Books exist, but none match the search filter
+  if (filteredBooks.length === 0) {
+    emptyMessage.textContent = 'No books found';
+    emptyMessage.style.display = 'block';
+    return;
+  }
+
+  // Case 3: Display matching books
+  emptyMessage.textContent = '';
+  emptyMessage.style.display = 'none';
+
+  filteredBooks.forEach((book) => {
+    bookList.appendChild(createBookElement(book));
+  });
+}
+
+// Listen for search input typing
+searchInput.addEventListener('input', () => {
+  renderBooks();
 });
+
+// Initial render on page load
+renderBooks();
 
 // Handle form submission
 bookForm.addEventListener('submit', (event) => {
@@ -126,9 +171,8 @@ bookForm.addEventListener('submit', (event) => {
   // Persist updated list to localStorage
   saveBooks();
 
-  // Prepend to UI list
-  const bookElement = createBookElement(newBook);
-  bookList.prepend(bookElement);
+  // Re-render list respecting active search filter
+  renderBooks();
 
   // Clear form
   bookForm.reset();
