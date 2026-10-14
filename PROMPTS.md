@@ -15,7 +15,7 @@ This document records the prompt sequence used to design, build, test, and style
 > - Keep the data after a page refresh using localStorage.
 > - Later, optionally: delete a book, show counts, and a phone-friendly layout.
 >
-> Visual direction: clean and minimal, inspired by the Apple India Store (lots of white space, system font, rounded cards, one blue accent colour). It must be my own design, with no copied code, logos or images.
+> Visual direction: clean and minimal,(lots of white space, system font, rounded cards, one blue accent colour).
 >
 > Before writing any code, list the files you will create, explain how the data will be saved, and outline the build in small steps. Do not write code yet.
 
@@ -60,7 +60,7 @@ This document records the prompt sequence used to design, build, test, and style
 
 ---
 
-### Prompt 6: Apple-Inspired Minimalist & Responsive Design
+### Prompt 6: Minimalist & Responsive Design
 > Restyle the app using my own design inspired by the Apple India Store's look and feel. Change style.css and only the minimum class names in the HTML. Do not change any behaviour.
 >
 > - Font: system font stack (-apple-system, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif).
@@ -77,10 +77,7 @@ This document records the prompt sequence used to design, build, test, and style
 > Redesign the look of my Book Tracker so it is more attractive and polished. It is a plain HTML, CSS and vanilla JavaScript app (index.html, style.css, app.js). 
 >
 > IMPORTANT: this is a visual change only. Do not change how adding, validation, search, status change or localStorage saving works. Do not rename functions or change the book data shape. If a small JavaScript change is needed for a visual effect, keep it minimal and tell me exactly what you changed and why.
->
-> Before coding, list what you will change in each file. Then make the changes.
->
-> Design (my own design, inspired by a clean Apple-style store look; no Apple logos, images,):
+>>
 > - Content max-width about 1000px, centred.
 > - Screens 900px and wider: two columns. Left: the "Add a book" card, sticky while scrolling. Right: the Books heading, search box and list.
 > - Below 900px: a single column.
@@ -101,3 +98,9 @@ This document records the prompt sequence used to design, build, test, and style
 ### Prompt 8: White Radiant Gradient & UI Refinement
 > use white gradiant background and use .agent skill to impove the ui and design
 
+---
+
+### Prompt 9: Delete Button & Dynamic Summary Line
+> Add two small features without changing existing behaviour:
+> 1. A Delete button on each book. Ask "Delete this book?" before removing it, and update localStorage.
+> 2. A summary line above the list, such as "3 finished, 1 reading, 2 to read", which updates when books are added, changed or deleted.

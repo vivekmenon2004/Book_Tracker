@@ -41,6 +41,18 @@ const authorError = document.getElementById('author-error');
 const searchInput = document.getElementById('search-input');
 const emptyMessage = document.getElementById('empty-message');
 const bookList = document.getElementById('book-list');
+const booksSummary = document.getElementById('books-summary');
+
+// Update summary counts line: "X finished, Y reading, Z to read"
+function updateSummary() {
+  if (!booksSummary) return;
+
+  const finishedCount = books.filter((b) => b.status === 'Finished').length;
+  const readingCount = books.filter((b) => b.status === 'Reading').length;
+  const toReadCount = books.filter((b) => b.status === 'To read').length;
+
+  booksSummary.textContent = `${finishedCount} finished, ${readingCount} reading, ${toReadCount} to read`;
+}
 
 // Clear error messages on input
 titleInput.addEventListener('input', () => {
@@ -154,11 +166,37 @@ function createBookElement(book) {
       statusEl.textContent = newStatus;
       statusEl.setAttribute('data-status', newStatus);
       saveBooks();
+      updateSummary();
     }
   });
 
+  // Delete button asking "Delete this book?" before removing
+  const deleteBtn = document.createElement('button');
+  deleteBtn.type = 'button';
+  deleteBtn.className = 'card-delete-btn';
+  deleteBtn.setAttribute('aria-label', 'Delete ' + book.title);
+  deleteBtn.textContent = 'Delete';
+
+  deleteBtn.addEventListener('click', () => {
+    const shouldDelete = window.confirm('Delete this book?');
+    if (shouldDelete) {
+      const index = books.findIndex((b) => b.id === book.id);
+      if (index !== -1) {
+        books.splice(index, 1);
+        saveBooks();
+        renderBooks();
+        updateSummary();
+      }
+    }
+  });
+
+  const controlsContainer = document.createElement('div');
+  controlsContainer.className = 'card-controls';
+  controlsContainer.appendChild(statusSelect);
+  controlsContainer.appendChild(deleteBtn);
+
   statusContainer.appendChild(statusEl);
-  statusContainer.appendChild(statusSelect);
+  statusContainer.appendChild(controlsContainer);
 
   detailsEl.appendChild(titleEl);
   detailsEl.appendChild(authorEl);
@@ -221,6 +259,7 @@ searchInput.addEventListener('input', () => {
 
 // Initial render on page load
 renderBooks();
+updateSummary();
 
 // Handle form submission
 bookForm.addEventListener('submit', (event) => {
@@ -267,6 +306,7 @@ bookForm.addEventListener('submit', (event) => {
 
   // Re-render list respecting active search filter and animating new card
   renderBooks(newBook.id);
+  updateSummary();
 
   // Clear form
   bookForm.reset();

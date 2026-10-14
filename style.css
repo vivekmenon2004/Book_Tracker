@@ -336,8 +336,16 @@ button[type="submit"]:focus-visible,
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin: 0 0 20px 0;
+  margin: 0 0 6px 0;
   color: var(--text-primary);
+}
+
+.books-summary {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0 0 20px 0;
+  letter-spacing: -0.01em;
 }
 
 .search-group {
@@ -567,6 +575,45 @@ button[type="submit"]:focus-visible,
   background-color: #ffffff;
 }
 
+/* Card Controls Container */
+.card-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Card Delete Button */
+.card-delete-btn {
+  height: 34px;
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: #64748b;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 980px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  user-select: none;
+}
+
+.card-delete-btn:hover {
+  color: var(--error-color);
+  background-color: #fff1f2;
+  border-color: rgba(225, 29, 72, 0.18);
+}
+
+.card-delete-btn:active {
+  transform: scale(0.97);
+}
+
+.card-delete-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.2);
+}
+
 /* --------------------------------------------------------------------------
    Animations: Slide & Fade-in for Newly Added Books
    -------------------------------------------------------------------------- */
@@ -654,8 +701,20 @@ button[type="submit"]:focus-visible,
     gap: 10px;
   }
 
-  .card-status-select {
+  .card-controls {
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-status-select {
+    flex: 1;
     min-height: 44px;
+  }
+
+  .card-delete-btn {
+    min-height: 44px;
+    padding: 0 16px;
   }
 }
