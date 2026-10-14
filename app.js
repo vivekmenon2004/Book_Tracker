@@ -1,5 +1,35 @@
-// In-memory state
-const books = [];
+// Storage Key
+const STORAGE_KEY = 'book_tracker_books';
+
+// Load books safely from localStorage
+function loadBooks() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) {
+      return [];
+    }
+    const parsed = JSON.parse(stored);
+    if (Array.isArray(parsed)) {
+      return parsed;
+    }
+    return [];
+  } catch (err) {
+    console.warn('Could not read or parse books from localStorage. Starting with an empty list.', err);
+    return [];
+  }
+}
+
+// Save current books array to localStorage safely
+function saveBooks() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+  } catch (err) {
+    console.error('Failed to save books to localStorage:', err);
+  }
+}
+
+// In-memory state initialized from localStorage
+const books = loadBooks();
 
 // DOM Element references
 const bookForm = document.getElementById('book-form');
@@ -48,6 +78,11 @@ function createBookElement(book) {
   return li;
 }
 
+// Render initially loaded books (saved in newest-first order)
+books.forEach((book) => {
+  bookList.appendChild(createBookElement(book));
+});
+
 // Handle form submission
 bookForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -76,7 +111,7 @@ bookForm.addEventListener('submit', (event) => {
     return;
   }
 
-  // Create book object
+  // Create book object (all fields preserved including status)
   const newBook = {
     id: Date.now().toString(),
     title: trimmedTitle,
@@ -87,6 +122,9 @@ bookForm.addEventListener('submit', (event) => {
 
   // Add to internal list (newest first)
   books.unshift(newBook);
+
+  // Persist updated list to localStorage
+  saveBooks();
 
   // Prepend to UI list
   const bookElement = createBookElement(newBook);
