@@ -60,24 +60,11 @@ This document records the prompt sequence used to design, build, test, and style
 
 ---
 
-### Prompt 6: Minimalist & Responsive Design
-> Restyle the app using my own design inspired by the Apple India Store's look and feel. Change style.css and only the minimum class names in the HTML. Do not change any behaviour.
->
-> - Font: system font stack (-apple-system, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif).
-> - Light grey page background, white rounded cards (about 16px radius), soft shadow, generous spacing.
-> - One blue accent colour for the Add button (pill-shaped) and focus states.
-> - Status labels as small pill badges with a different soft colour for each status.
-> - Sticky top header with the app name and a subtle blur or translucent background.
-> - Phone layout: single column, full-width inputs, tap targets at least 44px high, no horizontal scrolling at 360px width.
-> - Do not use Apple logos, images, font files or copied code.
-
----
-
-### Prompt 7: Attractive & Polished Redesign
+### Prompt 6: Attractive & Polished Redesign
 > Redesign the look of my Book Tracker so it is more attractive and polished. It is a plain HTML, CSS and vanilla JavaScript app (index.html, style.css, app.js). 
 >
 > IMPORTANT: this is a visual change only. Do not change how adding, validation, search, status change or localStorage saving works. Do not rename functions or change the book data shape. If a small JavaScript change is needed for a visual effect, keep it minimal and tell me exactly what you changed and why.
->>
+>
 > - Content max-width about 1000px, centred.
 > - Screens 900px and wider: two columns. Left: the "Add a book" card, sticky while scrolling. Right: the Books heading, search box and list.
 > - Below 900px: a single column.
@@ -87,30 +74,11 @@ This document records the prompt sequence used to design, build, test, and style
 > - Empty states: "No books yet. Add your first book above." and "No books found" centred, muted, with a simple inline SVG icon.
 > - Colour and theme: Define colours as CSS variables. One blue accent colour. Page background: very light grey to faint blue gradient. Support dark mode with @media (prefers-color-scheme: dark).
 > - Phone (600px and below): Single column, full-width inputs and a full-width Add button. Tap targets at least 44px high. No horizontal scrolling at 360px width.
-> - Accessibility: Keep all labels. Visible focus states. Good text contrast.
->
-> use the .agent skill for it
->
-> Only change what is needed. Do not add new features such as delete or counts.
-
 ---
 
-### Prompt 8: White Radiant Gradient & UI Refinement
-> use white gradiant background and use .agent skill to impove the ui and design
-
----
-
-### Prompt 9: Delete Button & Dynamic Summary Line
+### Prompt 7: Delete Button & Dynamic Summary Line
 > Add two small features without changing existing behaviour:
 > 1. A Delete button on each book. Ask "Delete this book?" before removing it, and update localStorage.
-> 2. A summary line above the list, such as "3 finished, 1 reading, 2 to read", which updates when books are added, changed or deleted.
+> 2. A summary line above the list, such as "3 finished, 1 reading, 2 to read", which updates when books are added, changed or deleted in an attractive like in a button like style.
 
----
-
-### Prompt 10: Red Delete Button, In-App Modal & Button-Like Summary Chips
-> make the delete button red colour and change the localhost meaasage for delete to a pop up and make the A summary line above the list, such as "3 finished, 1 reading, 2 to read", which updates when books are added, changed or deleted. attractive like in a button like that and add this to the prompts.md Add two small features without changing existing behaviour:
-> 1. A Delete button on each book. Ask "Delete this book?" before removing it, and update localStorage.
-> 2. A summary line above the list, such as "3 finished, 1 reading, 2 to read", which updates when books are added, changed or deleted.
->
-> and push to main branch
 
