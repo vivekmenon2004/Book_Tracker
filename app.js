@@ -69,13 +69,44 @@ function createBookElement(book) {
   authorEl.className = 'book-author';
   authorEl.textContent = 'By ' + book.author;
 
+  const statusContainer = document.createElement('div');
+  statusContainer.className = 'status-control';
+
   const statusEl = document.createElement('span');
   statusEl.className = 'book-status';
   statusEl.textContent = book.status;
 
+  const statusSelect = document.createElement('select');
+  statusSelect.className = 'card-status-select';
+  statusSelect.setAttribute('aria-label', 'Change status for ' + book.title);
+
+  const statusOptions = ['To read', 'Reading', 'Finished'];
+  statusOptions.forEach((optionValue) => {
+    const opt = document.createElement('option');
+    opt.value = optionValue;
+    opt.textContent = optionValue;
+    if (optionValue === book.status) {
+      opt.selected = true;
+    }
+    statusSelect.appendChild(opt);
+  });
+
+  statusSelect.addEventListener('change', (e) => {
+    const newStatus = e.target.value;
+    const targetBook = books.find((b) => b.id === book.id);
+    if (targetBook) {
+      targetBook.status = newStatus;
+      statusEl.textContent = newStatus;
+      saveBooks();
+    }
+  });
+
+  statusContainer.appendChild(statusEl);
+  statusContainer.appendChild(statusSelect);
+
   li.appendChild(titleEl);
   li.appendChild(authorEl);
-  li.appendChild(statusEl);
+  li.appendChild(statusContainer);
 
   return li;
 }

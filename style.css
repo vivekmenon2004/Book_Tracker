@@ -91,3 +91,17 @@ button {
   margin: 16px 0;
 }
 
+.status-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.card-status-select {
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  width: auto;
+}
+
