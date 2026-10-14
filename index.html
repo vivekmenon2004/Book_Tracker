@@ -7,35 +7,41 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Book Tracker</h1>
+  <header class="app-header">
+    <div class="header-container">
+      <h1 class="app-title">Book Tracker</h1>
+    </div>
+  </header>
 
-    <form id="book-form" novalidate>
-      <div class="form-group">
-        <label for="book-title">Title</label>
-        <input type="text" id="book-title" name="title" autocomplete="off">
-        <div class="error-message" id="title-error"></div>
-      </div>
+  <main class="container">
+    <section class="card form-card">
+      <form id="book-form" novalidate>
+        <div class="form-group">
+          <label for="book-title">Title</label>
+          <input type="text" id="book-title" name="title" autocomplete="off">
+          <div class="error-message" id="title-error"></div>
+        </div>
 
-      <div class="form-group">
-        <label for="book-author">Author</label>
-        <input type="text" id="book-author" name="author" autocomplete="off">
-        <div class="error-message" id="author-error"></div>
-      </div>
+        <div class="form-group">
+          <label for="book-author">Author</label>
+          <input type="text" id="book-author" name="author" autocomplete="off">
+          <div class="error-message" id="author-error"></div>
+        </div>
 
-      <div class="form-group">
-        <label for="book-status">Status</label>
-        <select id="book-status" name="status">
-          <option value="To read">To read</option>
-          <option value="Reading">Reading</option>
-          <option value="Finished">Finished</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="book-status">Status</label>
+          <select id="book-status" name="status">
+            <option value="To read">To read</option>
+            <option value="Reading">Reading</option>
+            <option value="Finished">Finished</option>
+          </select>
+        </div>
 
-      <button type="submit" id="submit-btn">Add</button>
-    </form>
+        <button type="submit" id="submit-btn">Add</button>
+      </form>
+    </section>
 
-    <div id="books-section">
+    <div id="books-section" class="books-section">
       <h2>Books</h2>
       <div class="form-group search-group">
         <label for="search-input">Search Books</label>
@@ -44,7 +50,7 @@
       <div id="empty-message" class="empty-message"></div>
       <ul id="book-list"></ul>
     </div>
-  </div>
+  </main>
 
   <script src="app.js"></script>
 </body>
